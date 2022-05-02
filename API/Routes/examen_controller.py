@@ -1,8 +1,10 @@
 from flask import Blueprint, request, jsonify
+import sqlalchemy
 from API.Models.PreguntasExamen import PreguntasExamen
 from API.Models.Pregunta import Pregunta
 from API.Models.Examen import Examen
 from API.Models.TiposExamen import TiposExamen
+from API.Models.InstanciaExamen import InstanciaExamen
 from API.Models.CriteriosPreguntas import CriteriosPreguntas
 from flask_jwt_extended import get_jwt_identity, jwt_required
 from .. import db
@@ -10,8 +12,8 @@ from .. import db
 examen_bp = Blueprint('pregunta', __name__)
 
 
+#@jwt_required()
 @examen_bp.route('/get_preguntas', methods=['GET'])
-@jwt_required()
 def getPreguntasDeExamen():
     # Obtener Examen ID
     examID = request.args.get('examenID')
@@ -47,15 +49,31 @@ def getPreguntasDeExamen():
 
 
 @examen_bp.route('/post_examen', methods=['POST'])
-@jwt_required
+@jwt_required()
 def publicarExamen():
 
     # Guardar parametros del post request
+    IdExamen = request.json.get("IdExamen")
+    IdUsuario = get_jwt_identity()
+    puntaje = request.json.get("puntaje")
+    tiempoDeJuego = request.json.get("tiempoJuego")
+    idsPreguntas = request.json.get("idsPreguntas")
+    respuestas = request.json.get("respuestas")
 
-    # Checar que vengan todos los parametros
+    # Checar que vengan todos los parametros y que respuestas y idsPreguntas sean del mismo tamaño
 
     # Ejecutar stores procedure pasando los parametros
+    db.session.execute(sqlalchemy.text("EXEC PublicarInstanciaExamen @IdExamen = :examenID, @IdUsuario = :usuarioID, @puntaje = :puntajeUsuario, @tiempoDeJuego = :tiempoJuego"),
+        { "examenID":IdExamen, "usuarioID":IdUsuario, "puntajeUsuario":puntaje, "tiempoJuego":tiempoDeJuego }
+    )
+    
+    idInstancia = InstanciaExamen.query.filter_by(ExamenID=IdExamen, UserID=IdUsuario, tiempoJuego=tiempoDeJuego).first()
 
-    db.session.execute(db.text("CALL my_proc(:param)"), param='something')
+    for idPregunta, respuesta in zip(idsPreguntas, respuestas):
+        db.session.execute(sqlalchemy.text("EXEC PublicarRespuestaExamen @IdInstancia = :InstanciaID, @IdPregunta = :PreguntaID, @Respuesta = :letraRespuesta"),
+            { "InstanciaID":idInstancia.InstanciaID, "PreguntaID":idPregunta, "letraRespuesta":respuesta }
+        )
 
-    return jsonify({'suxess' : True, 'message' : 'Examen publicado correctamente'}), 201
+    db.session.commit()
+
+    return jsonify({'success' : True, 'message' : 'Examen publicado correctamente'}), 201

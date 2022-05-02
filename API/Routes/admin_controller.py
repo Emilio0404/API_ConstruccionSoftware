@@ -140,7 +140,7 @@ def getCandidatesManagedByAdmin():
             }
         )
 
-    return jsonify(candidatos=candidatesList), 201
+    return jsonify(candidatos=candidatesList), 200
 
 
 @admin_bp.route('/getIdentity', methods=['POST'])
