@@ -50,12 +50,12 @@ def getPreguntasDeExamen():
 def publicarExamen():
 
     # Guardar parametros del post request
-    IdExamen = request.json.get("IdExamen")
+    IdExamen = request.json.form("IdExamen")
     IdUsuario = get_jwt_identity()
-    puntaje = request.json.get("puntaje")
-    tiempoDeJuego = request.json.get("tiempoJuego")
-    idsPreguntas = request.json.get("idsPreguntas")
-    respuestas = request.json.get("respuestas")
+    puntaje = request.json.form("puntaje")
+    tiempoDeJuego = request.json.form("tiempoJuego")
+    idsPreguntas = request.json.form("idsPreguntas")
+    respuestas = request.json.form("respuestas")
 
     # Checar que vengan todos los parametros y que respuestas y idsPreguntas sean del mismo tamaño
 
