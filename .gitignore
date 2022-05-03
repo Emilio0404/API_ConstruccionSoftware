@@ -1,2 +1,2 @@
 .flaskenv
-virtual_env/
+virtualenv/

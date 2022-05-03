@@ -2,10 +2,7 @@ from flask import Blueprint, request, jsonify
 import sqlalchemy
 from API.Models.PreguntasExamen import PreguntasExamen
 from API.Models.Pregunta import Pregunta
-from API.Models.Examen import Examen
-from API.Models.TiposExamen import TiposExamen
 from API.Models.InstanciaExamen import InstanciaExamen
-from API.Models.CriteriosPreguntas import CriteriosPreguntas
 from flask_jwt_extended import get_jwt_identity, jwt_required
 from .. import db
 
