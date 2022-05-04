@@ -34,8 +34,8 @@ def registerAdmin():
 @admin_bp.route('/login', methods=['POST'])
 def login():
     # Get user information
-    email = request.json.get("email")
-    password = request.json.get("password")
+    email = request.form.get("email")
+    password = request.form.get("password")
 
     # Verificar que correo y contraseña fueron proveidos
     if email is None:
