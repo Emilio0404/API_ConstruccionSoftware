@@ -11,8 +11,8 @@ user_bp = Blueprint('user', __name__, url_prefix='/user')
 @user_bp.route('/login', methods=['POST'])
 def loginUser():
     # Get user information
-    email = request.json.form("email")
-    password = request.json.form("password")
+    email = request.form.get("email")
+    password = request.form.get("password")
 
     # Verificar que correo y contraseña fueron proveidos
     if email is None:

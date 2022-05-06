@@ -3,6 +3,7 @@ from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_requir
 from API.Models.Administrador import Administrador
 from API.Models.Usuario import Usuario
 from .. import db, flask_bcrypt
+import sqlalchemy
 
 
 admin_bp = Blueprint('admin', __name__)
@@ -34,8 +35,8 @@ def registerAdmin():
 @admin_bp.route('/login', methods=['POST'])
 def login():
     # Get user information
-    email = request.form.get("email")
-    password = request.form.get("password")
+    email = request.json.get("email")
+    password = request.json.get("password")
 
     # Verificar que correo y contraseña fueron proveidos
     if email is None:
@@ -110,8 +111,11 @@ def deleteUser():
     if not user_to_delete:
         return jsonify({'success' : False, 'message' : 'No se encontró el usuario a borrar'}), 404
 
-    # Eliminar ususario
-    db.session.delete(user_to_delete)
+    # Ejecutar stored procedure para eliminar
+    db.session.execute(sqlalchemy.text("EXEC ProcedureEliminarUsuario @IdUsuario = :usuarioID"),
+        { "usuarioID":user_to_delete.UserID }
+    )
+
     db.session.commit()
 
     return jsonify({'success' : True, 'message' : 'Usuario eliminado correctamente'}), 200

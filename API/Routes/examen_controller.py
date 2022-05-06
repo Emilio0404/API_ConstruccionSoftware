@@ -9,7 +9,7 @@ from .. import db
 examen_bp = Blueprint('pregunta', __name__)
 
 
-#@jwt_required()
+@jwt_required()
 @examen_bp.route('/get_preguntas', methods=['GET'])
 def getPreguntasDeExamen():
     # Obtener Examen ID
