@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans&display=swap');
+
+.background {
+    height: 100vh;
+    background: rgba(114,0,2,0.77);
+    margin: 0;
+    overflow: hidden;
+}
+
+.main-container {
+    margin-right: 60px;
+    margin-left: 60px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.candidates-container {
+    display: inline-block;
+    width: 100rem;
+    height: 40rem;
+    background-color: rgba(225, 225, 225, 0.4);
+    padding-top: 20px;
+    padding-bottom: 5px;
+}
+
+.candidate-options {
+    color: white;
+    font-weight: bold;
+}

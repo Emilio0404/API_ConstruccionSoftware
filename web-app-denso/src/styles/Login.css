@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans&display=swap');
+
+.center-input {
+    font-family: 'Nunito Sans';
+    text-align: center;
+    color: white;
+
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.full-screen-container {
+    height: 100vh;
+    background-image: linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ), url('../imgs/denso-building.jpg');
+    backdrop-filter: blur(8px);
+}
+
+.companyName {
+    font-size: 500%;
+}
+
+.forms {
+    padding-top: 50px;
+    padding-bottom: 50px;
+}

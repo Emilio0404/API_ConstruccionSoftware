@@ -1,0 +1,19 @@
+.background {
+    height: 100vh;
+    background: rgba(114,0,2,0.77);
+    margin: 0;
+    overflow: hidden;
+}
+
+.main-container {
+    margin-right: 60px;
+    margin-left: 60px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.align-column {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
